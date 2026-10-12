@@ -1,4 +1,6 @@
 import StatsData from "../../data/StatsData";
+import { MdOutlineKeyboardArrowDown } from "react-icons/md";
+import { MdKeyboardArrowUp } from "react-icons/md";
 
 export default function StatsSection() {
   return (
@@ -14,13 +16,13 @@ export default function StatsSection() {
             </h4>
 
             <span
-              className={`text-xs rounded-full px-2 py-0.5 ${
+              className={`text-xs flex gap-0.5 rounded-full px-2 py-0.5 ${
                 data.percentageType === "positive"
                   ? "text-green-600 bg-green-100"
                   : "text-red-700 bg-red-100"
               }`}
             >
-              {data.percentage}
+              {data.percentage} {data.percentageType === "positive" ? <MdKeyboardArrowUp /> : <MdOutlineKeyboardArrowDown />}
             </span>
           </div>
 
