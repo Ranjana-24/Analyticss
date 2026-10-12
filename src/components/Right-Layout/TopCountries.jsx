@@ -1,5 +1,11 @@
 import CountriesData from "../../data/CountriesData";
+import { useSelector, useDispatch } from "react-redux";
+import { setSelectedCountry } from "../../redux/EcommerceSlice";
+
 export default function TopCountries() {
+  const dispatch  = useDispatch();
+  const selectedCountry = useSelector((state) => state.ecommerce.selectedCountry);
+
   return (
     <>
       <div className="bg-white font-lato  rounded-xl ">
@@ -10,7 +16,10 @@ export default function TopCountries() {
           {CountriesData.map((country, index) => (
             <div
               key={index}
-              className="flex justify-between px-3 cursor-pointer hover:bg-purple-100 mb-4"
+              className={`flex justify-between px-3 cursor-pointer hover:bg-purple-100 mb-4 ${
+                selectedCountry === country.country ? "bg-purple-100 text-purple-700" : "hover:bg-purple-100"
+              }`}
+              onClick={() => dispatch(setSelectedCountry(country.country))}
             >
               <div className="flex p-2 gap-2 ">
                 <img src={country.flag} alt="flag" className="w-5 h-5" />

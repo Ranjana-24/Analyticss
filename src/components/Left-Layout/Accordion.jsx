@@ -16,27 +16,29 @@ export default function Accordion() {
         {NavData.map((item, index) => (
           <div
             key={index}
-            className="flex justify-between mb-5 cursor-pointer hover:bg-purple-100"
+            className="flex flex-col mb-5 cursor-pointer hover:bg-purple-100 relative"
             onClick={() => setIsOpen(isOpen === index ? null : index)}
           >
             <div className="flex gap-3 py-1.5">
               <img src={item.icon} alt={item.title} className="w-4 h-4 m-1" />
               <h2>{item.title}</h2>
             </div>
-
+         
             {isOpen === index ? (
-              <FaAngleUp className="m-2" />
+              <FaAngleUp className="m-2 absolute top-1 right-0" />
             ) : (
-              <FaAngleDown className="m-2" />
+              <FaAngleDown className="m-2 absolute top-1 right-0" />
             )}
+          
 
             {/* children */}
             {isOpen === index && (
-              <div className="flex flex-col w-full gap-2 pl-10">
+              <div className="flex flex-col w-full items-center ">
                 {item.children.map((child, childIndex) => (
                   <div
                     key={childIndex}
-                    className="rounded-md px-3 py-2 text-sm text-gray-600 hover:bg-purple-100 hover:text-purple-700"
+                    className="rounded-md w-full px-4 py-2 text-sm text-gray-600
+        text-center hover:bg-purple-400 hover:text-purple-100 m-2"
                   >
                     {child.title}
                   </div>

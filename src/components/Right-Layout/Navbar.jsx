@@ -5,8 +5,15 @@ import { MdKeyboardArrowDown } from "react-icons/md";
 import { MdKeyboardArrowUp } from "react-icons/md";
 import NavData from "../../data/Navdata";
 import logo from "../../assets/logo.png";
+import {useDispatch, useSelector} from "react-redux";
+import { setSelectedYear } from "../../redux/EcommerceSlice";
 import { useState } from "react";
+
 export default function Navbar() {
+
+  const dispatch = useDispatch();
+  const selectedYear = useSelector((state) => state.ecommerce.selectedYear);
+
   const [issidebarOpen, setIssidebarOpen] = useState(false);
   // mobile sidebaropen
   const [isMobileArrowOpen, setIsMobileArrowOpen] = useState(null);
@@ -29,11 +36,11 @@ export default function Navbar() {
           </div>
           {issidebarOpen && (
             <div
-              className="bg-purple-100 flex  md:hidden w-1/3 h-screen  flex-col px-6 py-5 gap-8 rounded fixed top-10 
+              className="bg-purple-100 flex flex-col  md:hidden w-1/3 h-screen  px-6 py-5 gap-8 rounded fixed top-10 
             right-5 z-50"
             >
               {NavData.map((item, index) => (
-                <div className="flex justify-between" key={index}>
+                <div className="flex flex-col relative" key={index}>
                   <h4>{item.title}</h4>
                   {/* <MdKeyboardArrowDown
                     className="text-xl text-gray-500"
@@ -43,7 +50,7 @@ export default function Navbar() {
                       )
                     }
                   /> */}
-                  <div
+                  <div className="flex absolute top-0 right-0"
                     onClick={() =>
                       setIsMobileArrowOpen(
                         isMobileArrowOpen === index ? null : index,
@@ -59,7 +66,7 @@ export default function Navbar() {
                   {isMobileArrowOpen === index && (
                     <div className="flex flex-col gap-5 mt-5 items-center">
                       {item.children.map((child, childIndex) => (
-                        <div key={childIndex}>
+                        <div key={childIndex} className="font-lato text-sm hover:bg-purple-700 text-gray-600">
                           <h4>{child.title}</h4>
                         </div>
                       ))}
@@ -81,10 +88,19 @@ export default function Navbar() {
             </span>
           </h2>
         </span>
-        <div className="flex flex-row border border-gray-300 rounded-full bg-white px-2 text-sm">
+        <div className="flex flex-row border border-gray-300 rounded-full bg-white px-2 
+        text-sm ">
           <input type="text" placeholder="Search anything here..." />
           <IoMdSearch className="text-gray-300 text-xl m-2" />
         </div>
+        <select id="year" name="year" className="text-sm rounded-3xl px-2 font-lato
+         text-purple-900 bg-purple-100 sm: py-2 sm:text-center cursor-pointer"
+        value={selectedYear}
+        onChange={(e) => dispatch(setSelectedYear(Number(e.target.value)))}
+        >
+          <option value="2026">2026</option>
+          <option value="2025">2025</option>
+        </select>
       </div>
     </>
   );

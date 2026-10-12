@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {useSelector} from "react-redux";
 import {
   ResponsiveContainer,
   LineChart,
@@ -9,25 +9,28 @@ import {
   Line,
 } from "recharts";
 export default function RevenueOverview() {
-  const revenueData = [
-    { month: "Jan", revenue: 4000 },
-    { month: "Feb", revenue: 3000 },
-    { month: "Mar", revenue: 5000 },
-    { month: "Apr", revenue: 4500 },
-    { month: "May", revenue: 6000 },
-    { month: "Jun", revenue: 5500 },
-    { month: "Jul", revenue: 7000 },
-    { month: "Aug", revenue: 7500 },
-    { month: "Sep", revenue: 8000 },
-    { month: "Oct", revenue: 8500 },
-    { month: "Nov", revenue: 9000 },
-    { month: "Dec", revenue: 9500 },
-  ];
-  return (
+  const {data, selectedCountry, selectedYear} = useSelector(state => state.ecommerce);
+  // const revenueData = [
+  //   { month: "Jan", revenue: 4000 },
+  //   { month: "Feb", revenue: 3000 },
+  //   { month: "Mar", revenue: 5000 },
+  //   { month: "Apr", revenue: 4500 },
+  //   { month: "May", revenue: 6000 },
+  //   { month: "Jun", revenue: 5500 },
+  //   { month: "Jul", revenue: 7000 },
+  //   { month: "Aug", revenue: 7500 },
+  //   { month: "Sep", revenue: 8000 },
+  //   { month: "Oct", revenue: 8500 },
+  //   { month: "Nov", revenue: 9000 },
+  //   { month: "Dec", revenue: 9500 },
+  // ];
+  const revenueData = data.filter((item) => item.country === selectedCountry && 
+  item.year === selectedYear);
+    return (
     <div className="relative bg-white rounded-xl  ">
       {/* Heading */}
       <div className="flex justify-between p-2">
-        <h4 className="font-lato">Revenue Overview</h4>
+        <h4 className="font-lato">Revenue Overview : {selectedCountry} -({selectedYear})</h4>
       </div>
 
       {/* Chart */}
