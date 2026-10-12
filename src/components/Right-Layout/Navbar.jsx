@@ -4,17 +4,16 @@ import { MdKeyboardArrowDown } from "react-icons/md";
 import { MdKeyboardArrowUp } from "react-icons/md";
 import NavData from "../../data/Navdata";
 import logo from "../../assets/logo.png";
-import {useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setSelectedYear } from "../../redux/EcommerceSlice";
 import { useState } from "react";
-import Select from 'react-select'
+import Select from "react-select";
 
 export default function Navbar() {
-const options = [
-  { value: '2025', label: '2025' },
-  { value: '2026', label: '2026' },
-
-];
+  const options = [
+    { value: "2025", label: "2025" },
+    { value: "2026", label: "2026" },
+  ];
   const dispatch = useDispatch();
   const selectedYear = useSelector((state) => state.ecommerce.selectedYear);
 
@@ -26,31 +25,30 @@ const options = [
       <div className="flex gap-4 md:gap-10 flex-col sm:w-full sm:object-contain md:flex-row relative ">
         {/* mobile sidebar start */}
         <span className="flex items-center gap-2">
-          
-            <button
-                className="block md:hidden text-2xl"
-              onClick={() => setIssidebarOpen(!issidebarOpen)}
-            >
-              {issidebarOpen ? (
-                null
-              ) : (
-                <TbLayoutSidebar className="text-purple-900" />
-              )}
-            </button>
+          <button
+            className="block md:hidden text-2xl"
+            onClick={() => setIssidebarOpen(!issidebarOpen)}
+          >
+            {issidebarOpen ? null : (
+              <TbLayoutSidebar className="text-purple-900" />
+            )}
+          </button>
 
           {issidebarOpen && (
             <>
-            {/* Outside overlay */} 
-            <button className="fixed inset-0 bg-black/20 z-40 md:hidden" 
-            onClick={() => setIssidebarOpen(false)}  />
-            <div
-              className="bg-purple-100 flex flex-col md:hidden w-2/4 h-screen  px-6 py-5 gap-8 
+              {/* Outside overlay */}
+              <button
+                className="fixed inset-0 bg-black/20 z-40 md:hidden"
+                onClick={() => setIssidebarOpen(false)}
+              />
+              <div
+                className="bg-purple-100 flex flex-col md:hidden w-2/4 h-screen  px-6 py-5 gap-8 
               rounded fixed top-10 left-0 z-50"
-            >
-              {NavData.map((item, index) => (
-                <div className="flex flex-col relative w-full" key={index}>
-                  <h4>{item.title}</h4>
-                  {/* <MdKeyboardArrowDown
+              >
+                {NavData.map((item, index) => (
+                  <div className="flex flex-col relative w-full" key={index}>
+                    <h4>{item.title}</h4>
+                    {/* <MdKeyboardArrowDown
                     className="text-xl text-gray-500"
                     onClick={() =>
                       setIsMobileArrowOpen(
@@ -58,36 +56,40 @@ const options = [
                       )
                     }
                   /> */}
-                  <div className="flex absolute top-0 right-0"
-                    onClick={() =>
-                      setIsMobileArrowOpen(
-                        isMobileArrowOpen === index ? null : index,
-                      )
-                    }
-                  >
-                    {isMobileArrowOpen === index ? (
-                      <MdKeyboardArrowUp />
-                    ) : (
-                      <MdKeyboardArrowDown />
+                    <div
+                      className="flex absolute top-0 right-0"
+                      onClick={() =>
+                        setIsMobileArrowOpen(
+                          isMobileArrowOpen === index ? null : index,
+                        )
+                      }
+                    >
+                      {isMobileArrowOpen === index ? (
+                        <MdKeyboardArrowUp />
+                      ) : (
+                        <MdKeyboardArrowDown />
+                      )}
+                    </div>
+                    {isMobileArrowOpen === index && (
+                      <div className="flex flex-col gap-5 mt-5 items-center h-full ">
+                        {item.children.map((child, childIndex) => (
+                          <div
+                            key={childIndex}
+                            className="font-lato text-sm hover:bg-purple-700
+                         text-gray-600"
+                          >
+                            <h4>{child.title}</h4>
+                          </div>
+                        ))}
+                      </div>
                     )}
                   </div>
-                  {isMobileArrowOpen === index && (
-                    <div className="flex flex-col gap-5 mt-5 items-center h-full ">
-                      {item.children.map((child, childIndex) => (
-                        <div key={childIndex} className="font-lato text-sm hover:bg-purple-700
-                         text-gray-600">
-                          <h4>{child.title}</h4>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
             </>
           )}
           {/* mobile sidebar close */}
-          <h2 className="font-lato text-[#6E39CB] text-xl md:text-2xl font-semibold flex gap-2 ">
+          <h2 className="font-lato text-[#6E39CB] text-xl md:text-2xl font-semibold flex gap-2 text-center ">
             Analytics{" "}
             <span>
               <img
@@ -98,8 +100,10 @@ const options = [
             </span>
           </h2>
         </span>
-        <div className="flex flex-row justify-between  border border-gray-300 rounded-full bg-white px-2 
-        text-sm ">
+        <div
+          className="flex flex-row justify-between  border border-gray-300 rounded-full bg-white px-2 
+        text-sm "
+        >
           <input type="text" placeholder="Search anything here..." />
           <IoMdSearch className="text-gray-300 text-xl m-2" />
         </div>
@@ -112,16 +116,14 @@ const options = [
           <option value="2026">2026</option>
           <option value="2025">2025</option>
         </select> */}
-             <Select
-           options={options}
-           className="text-sm font-lato "
-           value={options.find(
-           (option) => Number(option.value) === selectedYear
-            )}
-            onChange={(option) =>
-            dispatch(setSelectedYear(Number(option.value)))
-         }
-/>
+        <Select
+          options={options}
+          className="text-sm font-lato "
+          value={options.find(
+            (option) => Number(option.value) === selectedYear,
+          )}
+          onChange={(option) => dispatch(setSelectedYear(Number(option.value)))}
+        />
       </div>
     </>
   );

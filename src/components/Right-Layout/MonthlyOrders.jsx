@@ -1,4 +1,4 @@
-import {useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 import {
   BarChart,
   Bar,
@@ -24,11 +24,17 @@ export default function MonthlyOrders() {
   //   { month: "Nov", orders: 9000 },
   //   { month: "Dec", orders: 9500 },
   // ];
-  const {data, selectedCountry, selectedYear} = useSelector(state => state.ecommerce);
-  const ordersData = data.filter((item) => item.country === selectedCountry && item.year === selectedYear);
+  const { data, selectedCountry, selectedYear } = useSelector(
+    (state) => state.ecommerce,
+  );
+  const ordersData = data.filter(
+    (item) => item.country === selectedCountry && item.year === selectedYear,
+  );
   return (
     <div className=" bg-white rounded-xl ">
-      <h2 className=" font-lato p-2">Monthly Orders : {selectedCountry} - ({selectedYear})</h2>
+      <h2 className=" font-lato p-2">
+        Monthly Orders : {selectedCountry} - ({selectedYear})
+      </h2>
 
       <div className=" w-full pr-3 mt-5 h-85">
         <ResponsiveContainer width="100%" height="100%">
