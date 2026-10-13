@@ -20,7 +20,7 @@ const NavData = [
     path: "/pages",
     children: [
       { title: "Profile", path: "/pages/profile" },
-      { title: "Settings", path: "/pages/settings" },
+      { title: "Todo", path: "/pages/todo" },
       { title: "Pricing", path: "/pages/pricing" },
       { title: "FAQ", path: "/pages/faq" },
     ],
