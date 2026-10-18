@@ -33,7 +33,7 @@ function App() {
             <div className="flex min-h-screen">
               <LeftLayout />
               <DragDropProvider>
-                {" "}
+                {/* inside components can access its properties */}{" "}
                 <TodoPage />{" "}
               </DragDropProvider>{" "}
             </div>

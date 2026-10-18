@@ -1,6 +1,7 @@
 const todoData = [
   {
     id: 1,
+    uid: "todo-1",
     title: "Hook up editor",
     description: "Bind editor fields to the update-card action.",
     priority: "Low",
@@ -13,6 +14,7 @@ const todoData = [
   },
   {
     id: 2,
+    uid: "todo-2",
     title: "Enable card menu",
     description: "Expose edit, duplicate, and delete from each card.",
     priority: "Medium",
@@ -26,6 +28,7 @@ const todoData = [
   },
   {
     id: 3,
+    uid: "todo-3",
     title: "Document filters",
     description: "Write examples for predicate filters and document supported options.",
     priority: "Low",
@@ -38,6 +41,7 @@ const todoData = [
   },
   {
     id: 4,
+    uid: "todo-4",
     title: "Add task validation",
     description: "Validate required fields when creating or updating a task.",
     priority: "High",
@@ -50,6 +54,7 @@ const todoData = [
   },
   {
     id: 5,
+      uid: "todo-5",
     title: "Improve empty state",
     description: "Display a helpful message when a column has no tasks.",
     priority: "Medium",
@@ -62,6 +67,7 @@ const todoData = [
   },
   {
     id: 6,
+    uid: "todo-6",
     title: "Add task search",
     description: "Allow users to search tasks by title and description.",
     priority: "High",

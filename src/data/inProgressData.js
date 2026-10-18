@@ -1,6 +1,7 @@
 const inProgressData = [
   {
     id: 1,
+     uid: "progress-1",
     title: "Implement store projection",
     description: "Group cards by column and keep ordering stable.",
     priority: "High",
@@ -14,6 +15,7 @@ const inProgressData = [
   },
   {
     id: 2,
+     uid: "progress-2",
     title: "Expand site test data",
     description: "Add enough card fields to exercise default sections.",
     priority: "Medium",
@@ -27,6 +29,7 @@ const inProgressData = [
   },
   {
     id: 3,
+    uid: "progress-3",
     title: "Build drag-and-drop logic",
     description: "Allow cards to move between columns using drag and drop.",
     priority: "High",
@@ -40,6 +43,7 @@ const inProgressData = [
   },
   {
     id: 4,
+    uid: "progress-4",
     title: "Add column limit checks",
     description: "Prevent columns from exceeding their configured task limits.",
     priority: "Medium",

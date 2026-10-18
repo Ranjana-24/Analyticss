@@ -1,6 +1,7 @@
 const doneData = [
   {
     id: 1,
+     uid: "done-1",
     title: "Draft kanban spec",
     description: "Cover the model, store actions, and render contract.",
     priority: "Medium",
@@ -14,6 +15,7 @@ const doneData = [
   },
   {
     id: 2,
+    uid: "done-2",
     title: "Render board layout",
     description: "Wire the basic board shell and column scrolling.",
     priority: "High",
@@ -27,6 +29,7 @@ const doneData = [
   },
   {
     id: 3,
+    uid: "done-3",
     title: "Create column structure",
     description: "Set up the To Do, In Progress, Review, and Done columns.",
     priority: "High",
@@ -40,6 +43,7 @@ const doneData = [
   },
   {
     id: 4,
+    uid: "done-4",
     title: "Build task card UI",
     description: "Display task titles, descriptions, priorities, tags, and progress.",
     priority: "Medium",
@@ -53,6 +57,7 @@ const doneData = [
   },
   {
     id: 5,
+    uid: "done-5",
     title: "Configure board state",
     description: "Initialize board data and manage task state across columns.",
     priority: "Low",
