@@ -37,15 +37,15 @@ const NavData = [
     ],
   },
   {
-    title: "E-commerce",
+    title: "Posts",
     icon: ecommerce,
-    path: "/e-commerce",
+    path: "/posts/postList",
     children: [
-      { title: "Products", path: "/e-commerce/products" },
-      { title: "Product Details", path: "/e-commerce/products/details" },
-      { title: "Add Product", path: "/e-commerce/products/add" },
-      { title: "Orders", path: "/e-commerce/orders" },
-      { title: "Customers", path: "/e-commerce/customers" },
+      { title: "Posts", path: "/posts/postList" },
+      // { title: "Product Details", path: "/e-commerce/products/details" },
+      // { title: "Add Product", path: "/e-commerce/products/add" },
+      // { title: "Orders", path: "/e-commerce/orders" },
+      // { title: "Customers", path: "/e-commerce/customers" },
     ],
   },
   {

@@ -4,7 +4,23 @@ import TodoPage from "./pages/TodoPage.jsx";
 import LeftLayout from "./components/Left-Layout/LeftLayout.jsx";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { DragDropProvider } from "@dnd-kit/react";
+import PostsPage from "./pages/PostsPage.jsx";
+import { useState, useEffect } from "react";
+import CreatePost from "./components/Posts/CreatePost.jsx";
+import DetailedPost from "./components/Posts/DetailedPost.jsx";
 function App() {
+  const [posts, setPosts] = useState(null);
+  useEffect(() => {
+    async function getPosts() {
+      const response = await fetch(
+        "https://jsonplaceholder.typicode.com/posts",
+      );
+      const data = await response.json();
+      setPosts(data);
+    }
+    getPosts();
+  }, []);
+
   return (
     <BrowserRouter>
       <Routes>
@@ -40,7 +56,39 @@ function App() {
           }
         />
         {/* <Route path="*" element={<HomePage />} /> */}
-        {/* <Route path="*" element={<ErrorMessage />} /> */}
+        <Route path="*" element={<ErrorMessage />} />
+        {/* list of posts */}
+        <Route
+          path="/posts/postList"
+          element={
+            <div className="flex min-h-screen w-full">
+              <LeftLayout />
+              <PostsPage posts={posts} setPosts={setPosts} />
+            </div>
+          }
+        />
+
+        {/* create new post */}
+        <Route
+          path="/posts/create"
+          element={
+            <div className="flex min-h-screen w-full">
+              <LeftLayout />
+              <CreatePost />
+            </div>
+          }
+        />
+
+        {/* read more about a post */}
+        <Route
+          path="/posts/:id"
+          element={
+            <div className="flex min-h-screen w-full">
+              <LeftLayout />
+              <DetailedPost />
+            </div>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
