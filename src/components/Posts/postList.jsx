@@ -10,7 +10,7 @@ export default function postList({ posts }) {
   if (posts === null) {
     return (
       <p className="p-6">
-        <FiLoader />
+        <FiLoader className="animate-spin text-2xl text-center"/>
       </p>
     );
   }

@@ -12,7 +12,7 @@ export default function DetailedPost({ posts, setPosts }) {
 
   if (posts === null) {
     return <p className="p-6">Loading post...</p>;
-  }
+  }    
 
   const post = posts.find((post) => post.id === Number(id));
 
@@ -30,7 +30,7 @@ export default function DetailedPost({ posts, setPosts }) {
   };
 
   return (
-    <div className="flex-1 bg-gradient-to-b from-gray-50 to-blue-100 ">
+    <div className="flex-1 bg-linear-to-b from-gray-50 to-blue-100 ">
       {confirmDlt && (
         <DeletePost
           confirmDlt={confirmDlt}

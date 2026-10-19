@@ -20,7 +20,7 @@ export default function CreatePost({ posts, setPosts }) {
   };
 
   return (
-    <div className=" flex-1 min-h-screen bg-gradient-to-b from-gray-50 to-blue-50  p-4 sm:p-8">
+    <div className=" flex-1 min-h-screen bg-linear-to-b from-gray-50 to-blue-50  p-4 sm:p-8">
    <form
         onSubmit={handleSubmit}
         className=" space-y-5 rounded-lg border border-gray-200 
