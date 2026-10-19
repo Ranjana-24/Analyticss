@@ -8,13 +8,12 @@ import PostsPage from "./pages/PostsPage.jsx";
 import { useState, useEffect } from "react";
 import CreatePost from "./components/Posts/CreatePost.jsx";
 import DetailedPost from "./components/Posts/DetailedPost.jsx";
+import EditPost from "./components/Posts/EditPost.jsx";
 function App() {
   const [posts, setPosts] = useState(null);
   useEffect(() => {
     async function getPosts() {
-      const response = await fetch(
-        "https://jsonplaceholder.typicode.com/posts",
-      );
+      const response = await fetch('https://jsonplaceholder.typicode.com/posts');
       const data = await response.json();
       setPosts(data);
     }
@@ -56,7 +55,10 @@ function App() {
           }
         />
         {/* <Route path="*" element={<HomePage />} /> */}
-        <Route path="*" element={<ErrorMessage />} />
+        <Route path="*" element={<div className="flex min-h-screen w-full">
+              <LeftLayout />
+              <ErrorMessage />
+            </div>} />
         {/* list of posts */}
         <Route
           path="/posts/postList"
@@ -74,7 +76,7 @@ function App() {
           element={
             <div className="flex min-h-screen w-full">
               <LeftLayout />
-              <CreatePost />
+              <CreatePost posts={posts} setPosts={setPosts} />
             </div>
           }
         />
@@ -85,7 +87,17 @@ function App() {
           element={
             <div className="flex min-h-screen w-full">
               <LeftLayout />
-              <DetailedPost />
+              <DetailedPost posts={posts} setPosts={setPosts} />
+            </div>
+          }
+        />
+        {/* edit a post */}
+        <Route
+          path="/posts/:id/edit"
+          element={
+            <div className="flex min-h-screen w-full">
+              <LeftLayout />
+              <EditPost posts={posts} setPosts={setPosts} />
             </div>
           }
         />

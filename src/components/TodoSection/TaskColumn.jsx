@@ -10,7 +10,7 @@ export default function TaskColumn({ title, data }) {
   return (
     <DroppableColumn id={`column-${title}`}>
       <ConfirmDltModal isOpen={confirmDlt} setIsOpen={setConfirmDlt} />
-      <div className="bg-gray-100 w-full flex flex-col gap-4 px-2 h-screen ">
+      <div className="bg-gray-100 w-full flex flex-col gap-4 px-2 h-screen shadow-sm">
         {/* Header */}
         <div className="flex justify-between py-3">
           <MdKeyboardArrowLeft className="text-2xl cursor-pointer" />

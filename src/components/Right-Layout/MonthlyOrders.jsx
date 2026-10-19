@@ -31,9 +31,9 @@ export default function MonthlyOrders() {
     (item) => item.country === selectedCountry && item.year === selectedYear,
   );
   return (
-    <div className=" bg-white rounded-xl ">
-      <h2 className=" font-lato p-2">
-        Monthly Orders : {selectedCountry} - ({selectedYear})
+    <div className=" bg-white rounded-xl shadow-sm">
+      <h2 className="font-lato font-semibold text-[102%] p-2">
+        Monthly Orders 
       </h2>
 
       <div className=" w-full pr-3 mt-5 h-85">

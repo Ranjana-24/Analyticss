@@ -36,10 +36,10 @@ export default function Accordion() {
             {isOpen === index && (
               <div className="flex flex-col w-full items-center ">
                 {item.children.map((child, childIndex) => (
-                  <Link to={child.path} key={childIndex}>
+                  <Link to={child.path} key={childIndex} className="w-full my-2">
                     <div
-                      className="rounded-md w-full px-4 py-2 text-sm text-gray-600
-        text-center hover:bg-purple-400 hover:text-purple-100 m-2"
+                      className="w-full rounded-md px-4 py-2 text-sm text-gray-600
+        text-center hover:bg-purple-500 hover:text-purple-100 "
                     >
                       {child.title}
                     </div>

@@ -4,35 +4,39 @@ export default function ConfirmDltModal({ isOpen, setIsOpen }) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 backdrop-blur-sm">
-      <form className="bg-white w-1/2 rounded">
+    <div className="fixed inset-0 z-50 flex items-center justify-center
+     bg-black/40 
+     backdrop-blur-sm">
+      <form className="bg-white w-1/2 rounded relative h-[39%]">
         <MdClose
-          className="text-red-600 right-1"
+          className="text-red-600 absolute right-2 top-1 cursor-pointer"
           onClick={() => setIsOpen(false)}
         />
-        <h1 className="text-2xl font-bold">Create Task</h1>
-        <div className="p-4">
-          <div>
-            <label for="title">Title : </label>
+        <h1 className="text-2xl font-bold px-6 my-2 font-lato ">Create Task</h1>
+        <div className="px-6">
+          <div >
+            <label for="title"
+            className="font-lato ">Title : </label>
             <input
               type="text"
               placeholder="Enter description"
               name="title"
-              className="border"
+              className="border w-full my-1 px-1"
             />
           </div>
-          <div>
-            <label for="description">Description :</label>
+          <div className="my-1">
+            <label for="description" className="font-lato">Description :</label>
             <textarea
               name="description"
               placeholder="Enter description"
-              className="border"
+              className="border w-full my-1 px-1"
             ></textarea>
           </div>
           <button
             type="submit"
             onClick={() => setIsOpen(false)}
-            className="bg-purple-500 text-white px-4 py-2 rounded-md hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-opacity-75"
+            className="bg-purple-500 text-white py-2 rounded-md
+             hover:bg-purple-600 cursor-pointer absolute right-0 mr-6 px-6" 
           >
             Create
           </button>

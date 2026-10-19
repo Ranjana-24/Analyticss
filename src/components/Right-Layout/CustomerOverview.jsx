@@ -26,10 +26,20 @@ export default function CustomerOverview() {
   const {data, selectedCountry, selectedYear} = useSelector(state => state.ecommerce);
   const overviewData = data.filter((item) => item.country === selectedCountry && item.year === selectedYear);
   return (
-    <div className="relative bg-white rounded-xl ">
+    <div className="relative bg-gray-50 rounded-xl shadow-sm">
       {/* Heading */}
-      <div className="flex justify-between p-2">
-        <h4 className="font-lato">Customer Overview - {selectedCountry} - ({selectedYear})</h4>
+         <div className=" flex justify-between p-2">
+        <div>
+        <h4 className="font-lato font-semibold text-[102%]">
+          Customer Overview : {selectedCountry} -({selectedYear})</h4>
+        
+      </div>
+      <select className="text-sm font-lato px-2   hover:border-purple-500">
+        <option value="jan">Jan</option>
+        <option value="feb">Feb</option>
+        <option value="mar">Mar</option>
+        <option value="apr">Apr</option>
+      </select>
       </div>
 
       {/* Chart */}

@@ -6,7 +6,7 @@ import CustomerOverview from "./CustomerOverview.jsx";
 import TopCountries from "./TopCountries.jsx";
 export default function RightLayout() {
   return (
-    <div className="flex-1 bg-purple-50 w-full h-full p-5">
+    <div className="flex-1 bg-gradient-to-b from-gray-50 to-blue-100 w-full h-full p-5">
       <Navbar />
       <div className="mt-5 ">
         <StatsSection />

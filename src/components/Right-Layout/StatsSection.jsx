@@ -1,87 +1,86 @@
+
 import StatsData from "../../data/StatsData";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { MdKeyboardArrowUp } from "react-icons/md";
-
 import { useSelector } from "react-redux";
 
 export default function StatsSection() {
-  const {data, selectedYear} = useSelector((state) => state.ecommerce);
-  const filteredData  = data.filter((item) => item.year === Number(selectedYear));
+  const { data, selectedYear } = useSelector(
+    (state) => state.ecommerce
+  );
 
-  const totalRevenue = filteredData.reduce((total, item) => total + item.revenue, 0);
-//   total is the running total.
-// item is the current record.
-// item.revenue is the revenue of that record.
-// 0 is the starting total.
-//.reduce takes many values and combines it into single value.
+  const filteredData = data.filter(
+    (item) => item.year === Number(selectedYear)
+  );
 
-const totalOrders = filteredData.reduce((total , item) => total+item.orders,0);
-//same as above , here total orders is the running total  and orders is the current record and  
-//item.orders are the amount in number.
+  const totalRevenue = filteredData.reduce(
+    (total, item) => total + item.revenue,
+    0
+  );
 
-const totalCustomers = filteredData.reduce((total, item) => total + item.customers, 0);
+  const totalOrders = filteredData.reduce(
+    (total, item) => total + item.orders,
+    0
+  );
 
-//calculate revenue you earn per order on average.
-const averageOrderValue = totalOrders > 0 ? totalRevenue/totalOrders : 0;
+  const totalCustomers = filteredData.reduce(
+    (total, item) => total + item.customers,
+    0
+  );
 
-// data is prepared , now we can use it in our component.
-// const stats = [
-//   {
-//     title: "Total Revenue",
-//     amount: `$${totalRevenue.toLocaleString("en-US")}`,
-//     subtitle: `Year ${selectedYear}`,
-//   },
-//   {
-//     title: "Total Orders",
-//     amount: totalOrders.toLocaleString("en-US"),
-//     subtitle: `Orders in ${selectedYear}`,
-//   },
-//   {
-//     title: "Total Customers",
-//     amount: totalCustomers.toLocaleString("en-US"),
-//     subtitle: `Customers in ${selectedYear}`,
-//   },
-//   {
-//     title: "Average Order Value",
-//     amount: `$${averageOrderValue.toFixed(2)}`,
-//     subtitle: `Average for ${selectedYear}`,
-//   },
-// ];
+  const averageOrderValue =
+    totalOrders > 0 ? totalRevenue / totalOrders : 0;
 
-const calculatedValues = {
-  "Total Revenue": `$${totalRevenue.toLocaleString("en-US")}`,
-  "Total Orders": totalOrders.toLocaleString("en-US"),
-  "Total Customers": totalCustomers.toLocaleString("en-US"),
-  "Average Order Value": `$${averageOrderValue.toFixed(2)}`,
-};
+  const calculatedValues = {
+    "Total Revenue": `$${totalRevenue.toLocaleString("en-US")}`,
+    "Total Orders": totalOrders.toLocaleString("en-US"),
+    "Total Customers": totalCustomers.toLocaleString("en-US"),
+    "Average Order Value": `$${averageOrderValue.toFixed(2)}`,
+  };
+
   return (
-    <section className="bg-white w-full grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 px-4 py-3 font-lato rounded-xl">
-      {StatsData.map((data, index) => (
+    <section className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4 
+    font-lato">
+      {StatsData.map((item) => (
         <div
-          key={index}
-          className="relative py-3 px-2 lg:border-r border-gray-200 lg:last:border-r-0"
+          key={item.title}
+          className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm 
+          transition-all duration-300 hover:-translate-y-1 hover:shadow-md
+          hover:border-purple-600 hover:bg-purple-100"
         >
-          <div className="flex flex-wrap items-center gap-2">
-            <h4 className="text-sm text-gray-700 font-semibold">
-              {data.title}
+          {/* Card heading and percentage */}
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <h4 className="text-sm font-semibold text-gray-600">
+              {item.title}
             </h4>
 
             <span
-              className={`text-xs flex gap-0.5 rounded-full px-2 py-0.5 ${
-                data.percentageType === "positive"
-                  ? "text-green-600 bg-green-100"
-                  : "text-red-700 bg-red-100"
+              className={`inline-flex items-center gap-0.5 rounded-full px-2 py-1 
+                text-xs font-semibold ${
+                item.percentageType === "positive"
+                  ? "bg-green-50 text-green-600"
+                  : "bg-red-50 text-red-600"
               }`}
             >
-              {data.percentage}{data.percentageType === "positive" ? <MdKeyboardArrowUp /> : <MdOutlineKeyboardArrowDown />}
+              {item.percentage}
+
+              {item.percentageType === "positive" ? (
+                <MdKeyboardArrowUp size={16} />
+              ) : (
+                <MdOutlineKeyboardArrowDown size={16} />
+              )}
             </span>
           </div>
 
-          <h3 className="text-xl font-bold text-[#6E39CB] mt-2">
-             {calculatedValues[data.title]}
+          {/* Main statistic */}
+          <h3 className="mt-4 text-2xl font-bold text-[#6E39CB]">
+            {calculatedValues[item.title]}
           </h3>
 
-          <p className="text-xs text-gray-500 mt-1">Year {selectedYear}</p>
+          {/* Footer */}
+          <p className="mt-2 text-xs text-gray-400">
+            Year {selectedYear}
+          </p>
         </div>
       ))}
     </section>

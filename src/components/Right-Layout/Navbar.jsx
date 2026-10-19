@@ -25,7 +25,7 @@ export default function Navbar() {
     <>
       <div className="flex gap-4 md:gap-10 flex-col sm:w-full sm:object-contain md:flex-row relative ">
         {/* mobile sidebar start */}
-        <span className="flex items-center gap-2">
+        <span className="flex items-center gap-2 ">
           <button
             className="block md:hidden text-2xl"
             onClick={() => setIssidebarOpen(!issidebarOpen)}
@@ -40,7 +40,7 @@ export default function Navbar() {
               <>
                 {/* Outside overlay */}
                 <button
-                  className="fixed inset-0 bg-black/20 z-40 md:hidden"
+                  className="fixed inset-0 bg-black/20 z-40 md:hidden h-screen"
                   onClick={() => setIssidebarOpen(false)}
                 />
                 <motion.div
@@ -48,11 +48,11 @@ export default function Navbar() {
                   animate={{ x: 0 }}
                   exit={{ x: "-100%" }}
                   transition={{ duration: 0.3, ease: "easeInOut" }}
-                  className="bg-purple-100 flex flex-col md:hidden w-2/4 h-screen  px-6 py-5 gap-8 
-              rounded fixed top-10 left-0 z-50"
+                  className="bg-purple-100 flex flex-col md:hidden 
+                  w-2/4 h-full px-6 py-5 gap-8 rounded fixed top-0 left-0 z-50"
                 >
                   {NavData.map((item, index) => (
-                    <div className="flex flex-col relative w-full" key={index}>
+                    <div className="flex flex-col relative w-full " key={index}>
                       <h4>{item.title}</h4>
                       {/* <MdKeyboardArrowDown
                     className="text-xl text-gray-500"
@@ -81,7 +81,7 @@ export default function Navbar() {
                           {item.children.map((child, childIndex) => (
                             <div
                               key={childIndex}
-                              className="font-lato text-sm hover:bg-purple-700
+                              className="font-lato text-sm  w-full
                          text-gray-600"
                             >
                               <h4>{child.title}</h4>

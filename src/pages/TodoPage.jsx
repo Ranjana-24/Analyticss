@@ -20,7 +20,7 @@ export default function TodoPage() {
     },
   });
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-5 bg-purple-50 w-full">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-5 bg-gray-50 w-full">
       {/* <TaskColumn title="To Do" data={todoData} />
 
       <TaskColumn title="In Progress" data={inProgressData} />

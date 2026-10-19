@@ -8,9 +8,11 @@ export default function TopCountries() {
 
   return (
     <>
-      <div className="bg-white font-lato  rounded-xl ">
+      <div className="bg-gray-50 font-lato  rounded-xl shadow-sm">
         {/* Heading */}
-        <h4 className="font-lato p-2">Top Countries</h4>
+        <div >
+        <h4 className="font-lato font-semibold text-[102%] p-2">Top Countries</h4>
+        </div>
         {/* Countries */}
         <div className="mt-5 h-85">
           {CountriesData.map((country, index) => (
