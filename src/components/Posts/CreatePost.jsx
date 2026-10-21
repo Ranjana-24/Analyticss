@@ -4,81 +4,102 @@ import { useNavigate } from "react-router-dom";
 export default function CreatePost({ posts, setPosts }) {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  async function handleSubmit(e) {
     e.preventDefault();
 
-    const newPost = {
-      id: Date.now(),
-      title,
-      body,
-    };
+    setLoading(true);
+    setError("");
 
-    setPosts([newPost, ...posts]);
-    navigate("/posts/postList");
-  };
+    try {
+      const response = await fetch(
+        "https://jsonplaceholder.typicode.com/posts",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            title: title,
+            body: body,
+            userId: 1,
+          }),
+        },
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to create post");
+      }
+
+      const data = await response.json();
+
+      //console.log("Created post:", data);
+      setPosts((prevPosts) => [data, ...prevPosts]);
+      navigate("/posts");
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
-    <div className=" flex-1 min-h-screen bg-linear-to-b from-gray-50 to-blue-50  p-4 sm:p-8">
-   <form
-        onSubmit={handleSubmit}
-        className=" space-y-5 rounded-lg border border-gray-200 
-        bg-white p-5 sm:p-8"
-      >
-        
+    <main className="min-w-0 flex-1 bg-gray-50 p-6">
+      <div className="mx-auto max-w-xl rounded-xl border bg-white p-6 shadow-sm">
+        <h1 className="mb-6 text-2xl font-bold">Create Post</h1>
 
-        <div>
-          <label
-            htmlFor="title"
-            className="mb-2 block text-sm font-medium text-gray-700"
-          >
-            Title
-          </label>
-          <input
-            id="title"
-            type="text"
-            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm "
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-          />
-        </div>
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <div>
+            <label className="mb-2 block font-medium">Title</label>
 
-        <div>
-          <label
-            htmlFor="body"
-            className="mb-2 block text-sm font-medium text-gray-700"
-          >
-            Body
-          </label>
-          <textarea
-            id="body"
-            rows={6}
-            className="w-full  rounded-md border border-gray-300 px-3 py-2 text-sm "
-            value={body}
-            onChange={(e) => setBody(e.target.value)}
-            required
-          />
-        </div>
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="Enter post title"
+              required
+              className="w-full rounded-lg border p-3 outline-none focus:border-blue-500"
+            />
+          </div>
 
-        <div className="flex justify-end gap-3 border-t border-gray-100 pt-4">
-          <button
-            type="button"
-            onClick={() => navigate(`/posts/postList`)}
-            className="rounded-md border border-gray-300 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
-          >
-            Cancel
-          </button>
+          <div>
+            <label className="mb-2 block font-medium">Body</label>
 
-          <button
-            type="submit"
-            className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
-          >
-            Create
-          </button>
-        </div>
-      </form>
-    </div>
+            <textarea
+              value={body}
+              onChange={(e) => setBody(e.target.value)}
+              placeholder="Enter post description"
+              rows={5}
+              required
+              className="w-full rounded-lg border p-3 outline-none focus:border-blue-500"
+            />
+          </div>
+
+          {error && <p className="text-red-500">{error}</p>}
+
+          <div className="flex gap-3">
+            <button
+              type="submit"
+              disabled={loading}
+              className="rounded-lg bg-blue-600 px-5 py-3 text-white hover:bg-blue-700 disabled:opacity-50"
+            >
+              {loading ? "Creating..." : "Create Post"}
+            </button>
+
+            <button
+              type="button"
+              onClick={() => navigate("/posts")}
+              className="rounded-lg border px-5 py-3 hover:bg-gray-100"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </main>
   );
 }

@@ -4,16 +4,21 @@ import TodoPage from "./pages/TodoPage.jsx";
 import LeftLayout from "./components/Left-Layout/LeftLayout.jsx";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { DragDropProvider } from "@dnd-kit/react";
-import PostsPage from "./pages/PostsPage.jsx";
+
 import { useState, useEffect } from "react";
+
+// post
+import PostsPage from "./pages/PostsPage.jsx";
 import CreatePost from "./components/Posts/CreatePost.jsx";
 import DetailedPost from "./components/Posts/DetailedPost.jsx";
-import EditPost from "./components/Posts/EditPost.jsx";
+
 function App() {
-  const [posts, setPosts] = useState(null);
+  const [posts, setPosts] = useState([]);
   useEffect(() => {
     async function getPosts() {
-      const response = await fetch('https://jsonplaceholder.typicode.com/posts');
+      const response = await fetch(
+        "https://jsonplaceholder.typicode.com/posts",
+      );
       const data = await response.json();
       setPosts(data);
     }
@@ -54,50 +59,46 @@ function App() {
             </div>
           }
         />
-        {/* <Route path="*" element={<HomePage />} /> */}
-        <Route path="*" element={<div className="flex min-h-screen w-full">
-              <LeftLayout />
-              <ErrorMessage />
-            </div>} />
-        {/* list of posts */}
+
         <Route
-          path="/posts/postList"
+          path="*"
           element={
             <div className="flex min-h-screen w-full">
+              <LeftLayout />
+              <ErrorMessage />
+            </div>
+          }
+        />
+
+        {/* post routes */}
+        <Route
+          path="/posts"
+          element={
+            <div className="flex min-h-screen">
               <LeftLayout />
               <PostsPage posts={posts} setPosts={setPosts} />
             </div>
           }
         />
 
-        {/* create new post */}
+        {/* create post */}
         <Route
           path="/posts/create"
           element={
-            <div className="flex min-h-screen w-full">
+            <div className="flex min-h-screen">
               <LeftLayout />
               <CreatePost posts={posts} setPosts={setPosts} />
             </div>
           }
         />
 
-        {/* read more about a post */}
+        {/* detailed post */}
         <Route
           path="/posts/:id"
           element={
-            <div className="flex min-h-screen w-full">
+            <div className="flex min-h-screen">
               <LeftLayout />
               <DetailedPost posts={posts} setPosts={setPosts} />
-            </div>
-          }
-        />
-        {/* edit a post */}
-        <Route
-          path="/posts/:id/edit"
-          element={
-            <div className="flex min-h-screen w-full">
-              <LeftLayout />
-              <EditPost posts={posts} setPosts={setPosts} />
             </div>
           }
         />

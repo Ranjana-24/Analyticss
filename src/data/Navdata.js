@@ -39,9 +39,9 @@ const NavData = [
   {
     title: "Posts",
     icon: ecommerce,
-    path: "/posts/postList",
+    path: "/posts",
     children: [
-      { title: "Posts", path: "/posts/postList" },
+      { title: "Posts", path: "/posts" },
       // { title: "Product Details", path: "/e-commerce/products/details" },
       // { title: "Add Product", path: "/e-commerce/products/add" },
       // { title: "Orders", path: "/e-commerce/orders" },
