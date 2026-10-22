@@ -1,65 +1,99 @@
-// import { FiLoader } from "react-icons/fi";
-// import { FaArrowAltCircleRight } from "react-icons/fa";
-// import { useNavigate } from "react-router-dom";
-// import { IoCreate } from "react-icons/io5";
-
-// export default function postList({ posts }) {
-//   const navigate = useNavigate();
-
-//   if (posts === null) {
-//     return (
-//       <p className="p-6">
-//         <FiLoader className="animate-spin text-2xl text-center"/>
-//       </p>
-//     );
-//   }
-//   return (
-//     <div className="flex-1 bg-gray-50 p-4">
-//       <div className="flex justify-between mb-4 ">
-//         <h1 className="text-3xl font-bold ">All Posts </h1>
-//         <button onClick={() => navigate("/posts/create")}
-//            className="text-xl cursor-pointer text-gray-700
-//            ">
-//           <IoCreate/>
-//         </button>
-//       </div>
-//       <div className="font-lato">
-//         {posts.map((post, index) => (
-//           <div key={index} classsName="font-lato flex flex-row  ">
-//             <div className="flex border rounded-2xl gap-2  mb-2 p-4 justify-between cursor-pointer
-//             hover:  hover:scale-101 hover:bg-gray-100 hover:font-semibold">
-//               <h2 className="text-md ">{post.title}</h2>
-//               <button
-//                 onClick={() => navigate(`/posts/${post.id}`)}
-//                 className="cursor-pointer"
-//               >
-//                 <FaArrowAltCircleRight />
-//               </button>
-//             </div>
-//           </div>
-//         ))}
-//       </div>
-//     </div>
-//   );
-// }
 import { FaArrowAltCircleRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { IoCreate } from "react-icons/io5";
+import { MdDelete } from "react-icons/md";
+import { MdModeEditOutline } from "react-icons/md";
+import { useState } from "react";
 
-export default function postList({ posts, setPosts }) {
+import DeletePost from "../Posts/DeletePost.jsx";
+export default function postList({ posts, setPosts, loading, error }) {
   const navigate = useNavigate();
+  const [confirmDlt, setConfirmDlt] = useState(false);
+  const [selectedPost, setSelectedPost] = useState(null);
+  const [selectedUserId, setSelectedUserId] = useState(null);
+  if (loading) {
+    return <p className="p-6">Loading posts...</p>;
+  }
 
+  if (error) {
+    return <p className="p-6 text-red-500">{error}</p>;
+  }
+
+  if (posts.length === 0) {
+    return <p className="p-6">No posts found.</p>;
+  }
+
+  async function handleDelete() {
+    if (!selectedPost) return;
+
+    try {
+      const response = await fetch(
+        `https://jsonplaceholder.typicode.com/posts/${selectedPost.id}`,
+        {
+          method: "DELETE",
+        },
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to delete post");
+      }
+
+      setPosts((prevPosts) =>
+        prevPosts.filter((post) => post.id !== selectedPost.id),
+      );
+
+      setConfirmDlt(false);
+      setSelectedPost(null);
+    } catch (error) {
+      console.error("Delete error:", error);
+    }
+  }
+
+  // filter fnx
+  async function handleFilter(e) {
+    const userId = e.target.value;
+    setSelectedUserId(userId);
+
+    try {
+      const response = await fetch(
+        `https://jsonplaceholder.typicode.com/posts?userId=${userId}`,
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch posts");
+      }
+
+      const data = await response.json();
+      setPosts(data);
+    } catch (error) {
+      console.error("Filter error:", error);
+    }
+  }
   return (
     <div className="flex-1 bg-gray-50 p-4">
       <div className="mb-4 flex justify-between">
         <h1 className="text-3xl font-bold">All Posts</h1>
-
-        <button
-          onClick={() => navigate("/posts/create")}
-          className="cursor-pointer text-xl text-gray-700"
-        >
-          <IoCreate />
-        </button>
+        <div className="flex gap-2">
+          <select value={selectedUserId} onChange={handleFilter}>
+            <option>All posts</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+            <option>8</option>
+            <option>9</option>
+            <option>10</option>
+          </select>
+          <button
+            onClick={() => navigate("/posts/create")}
+            className="cursor-pointer text-xl text-gray-700"
+          >
+            <IoCreate />
+          </button>
+        </div>
       </div>
 
       <div className="font-lato">
@@ -67,16 +101,33 @@ export default function postList({ posts, setPosts }) {
           <div key={post.id} className="mb-2 flex">
             <div className="flex w-full justify-between gap-2 rounded-2xl border p-4 hover:bg-gray-100">
               <h2>{post.title}</h2>
-
-              <button
-                onClick={() => navigate(`/posts/${post.id}`)}
-                className="cursor-pointer"
-              >
-                <FaArrowAltCircleRight />
-              </button>
+              <div className="flex gap-2">
+                <button onClick={() => navigate(`/posts/${post.id}/edit`)}>
+                  <MdModeEditOutline />
+                </button>
+                <button
+                  onClick={() => {
+                    setSelectedPost(post);
+                    setConfirmDlt(true);
+                  }}
+                >
+                  <MdDelete />
+                </button>
+                <button
+                  onClick={() => navigate(`/posts/${post.id}`)}
+                  className="cursor-pointer"
+                >
+                  <FaArrowAltCircleRight />
+                </button>
+              </div>
             </div>
           </div>
         ))}
+        <DeletePost
+          confirmDlt={confirmDlt}
+          setConfirmDlt={setConfirmDlt}
+          handleDelete={handleDelete}
+        />
       </div>
     </div>
   );
