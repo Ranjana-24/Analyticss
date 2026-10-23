@@ -1,17 +1,72 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
 export default function CreatePost({ setPosts }) {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  //const [loading, setLoading] = useState(false);
+  // const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  // async function handleSubmit(e) {
+  //   e.preventDefault();
+  //   try {
+  //     setLoading(true);
+  //     setError("");
+  //     const response = await fetch(
+  //       "https://jsonplaceholder.typicode.com/posts",
+  //       {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify({
+  //           title,
+  //           body,
+  //         }),
+  //       },
+  //     );
+  //     if (!response.ok) {
+  //       throw new Error("Failed to create post");
+  //     }
+  //     const data = await response.json();
+  //     const newPosts = {
+  //       ...data,
+  //       id: Date.now(),
+  //       userId: 1,
+  //       title,
+  //       body,
+  //     };
+  //     setPosts((prevPosts) => [newPosts, ...prevPosts]);
+  //     navigate("/posts");
+  //   } catch (err) {
+  //     setError(err.message);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // }
   async function handleSubmit(e) {
     e.preventDefault();
+    //setError("");
     try {
-      setLoading(true);
-      setError("");
+      const data = await createPostMutation.mutateAsync({
+        title,
+        body,
+        userId: 1,
+      });
+      const newPost = {
+        ...data,
+        id: Date.now(),
+      };
+      setPosts((prevPosts) => [newPost, ...prevPosts]);
+      navigate("/posts");
+    } catch (err) {
+      //setError(err);
+      console.log(err);
+    }
+  }
+  const createPostMutation = useMutation({
+    mutationFn: async (newPost) => {
       const response = await fetch(
         "https://jsonplaceholder.typicode.com/posts",
         {
@@ -19,31 +74,17 @@ export default function CreatePost({ setPosts }) {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            title,
-            body,
-          }),
+          body: JSON.stringify(newPost),
         },
       );
       if (!response.ok) {
         throw new Error("Failed to create post");
       }
-      const data = await response.json();
-      const newPosts = {
-        ...data,
-        id: Date.now(),
-        userId: 1,
-        title,
-        body,
-      };
-      setPosts((prevPosts) => [newPosts, ...prevPosts]);
-      navigate("/posts");
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  }
+      return response.json();
+      // above line sends the api's response to the mutation.
+    },
+  });
+  const { isPending, isError, error } = createPostMutation;
 
   return (
     <>
@@ -68,9 +109,10 @@ export default function CreatePost({ setPosts }) {
             required
           />
         </div>
+        {isError && <p className="text-red-500">{error.message}</p>}
         <div className="flex gap-2">
           <button type="submit">
-            {loading ? "creating..." : "Create Post"}
+            {isPending ? "creating..." : "Create Post"}
           </button>
           <button type="button" onClick={() => navigate("/posts")}>
             Cancel

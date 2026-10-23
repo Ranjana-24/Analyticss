@@ -5,7 +5,7 @@ import LeftLayout from "./components/Left-Layout/LeftLayout.jsx";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { DragDropProvider } from "@dnd-kit/react";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 // post
 import PostsPage from "./pages/PostsPage.jsx";
@@ -14,33 +14,33 @@ import CreatePost from "./components/Posts/CreatePost.jsx";
 import EditPost from "./components/Posts/EditPost.jsx";
 function App() {
   const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  useEffect(() => {
-    async function getPosts() {
-      try {
-        setLoading(true);
-        setError("");
+  // const [loading, setLoading] = useState(false);
+  // const [error, setError] = useState(null);
+  // useEffect(() => {
+  //   async function getPosts() {
+  //     try {
+  //       setLoading(true);
+  //       setError("");
 
-        const response = await fetch(
-          "https://jsonplaceholder.typicode.com/posts",
-        );
+  //       const response = await fetch(
+  //         "https://jsonplaceholder.typicode.com/posts",
+  //       );
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch posts");
-        }
+  //       if (!response.ok) {
+  //         throw new Error("Failed to fetch posts");
+  //       }
 
-        const data = await response.json();
-        setPosts(data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    }
+  //       const data = await response.json();
+  //       setPosts(data);
+  //     } catch (err) {
+  //       setError(err.message);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   }
 
-    getPosts();
-  }, []);
+  //   getPosts();
+  // }, []);
 
   return (
     <BrowserRouter>
@@ -94,10 +94,10 @@ function App() {
             <div className="flex min-h-screen">
               <LeftLayout />
               <PostsPage
-                posts={posts}
+                //posts={posts}
                 setPosts={setPosts}
-                loading={loading}
-                error={error}
+                //loading={loading}
+                // error={error}
               />
             </div>
           }

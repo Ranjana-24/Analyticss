@@ -6,17 +6,42 @@ import { MdModeEditOutline } from "react-icons/md";
 import { useState } from "react";
 
 import DeletePost from "../Posts/DeletePost.jsx";
-export default function postList({ posts, setPosts, loading, error }) {
+import { useQuery } from "@tanstack/react-query";
+export default function postList({ setPosts }) {
   const navigate = useNavigate();
+  //const [loading, setLoading] = useState(false);
+  //const [error, setError] = useState("");
   const [confirmDlt, setConfirmDlt] = useState(false);
   const [selectedPost, setSelectedPost] = useState(null);
   const [selectedUserId, setSelectedUserId] = useState(null);
-  if (loading) {
+
+  const {
+    data: posts,
+    isPending,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["posts"],
+    queryFn: async () => {
+      const response = await fetch(
+        `https://jsonplaceholder.typicode.com/posts`,
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch posts");
+      }
+
+      const data = await response.json();
+      return data;
+    },
+    staleTime: 60 * 1000,
+  });
+  if (isPending) {
     return <p className="p-6">Loading posts...</p>;
   }
 
-  if (error) {
-    return <p className="p-6 text-red-500">{error}</p>;
+  if (isError) {
+    return <p className="p-6 text-red-500">{error.message}</p>;
   }
 
   if (posts.length === 0) {
