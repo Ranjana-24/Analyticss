@@ -3,6 +3,8 @@ export default function DeletePost({
   confirmDlt,
   setConfirmDlt,
   handleDelete,
+  isDeleting,
+  deleteError,
 }) {
   return (
     <>
@@ -23,7 +25,11 @@ export default function DeletePost({
             <p className="mt-5 text-gray-700 hadow-yellow-500 text-sm">
               Are you sure you want to delete this post?
             </p>
-
+          {deleteError && (
+          <p className="mt-3 text-sm text-red-500">
+            {deleteError.message}
+          </p>
+        )}
             <div className="mt-6 flex justify-end gap-3 ">
               <button
                 onClick={() => setConfirmDlt(false)}
@@ -31,16 +37,13 @@ export default function DeletePost({
               >
                 Cancel
               </button>
-
-              <button
-                onClick={() => {
-                  handleDelete();
-                  setConfirmDlt(false);
-                }}
-                className="border hover:bg-red-500 p-1 cursor-pointer text-sm hover:scale-105 rounded"
-              >
-                Delete Post
-              </button>
+         <button
+  onClick={handleDelete}
+  disabled={isDeleting}
+  className="border hover:bg-red-500 p-1 cursor-pointer text-sm hover:scale-105 rounded disabled:opacity-50"
+>
+  {isDeleting ? "Deleting..." : "Delete Post"}
+</button>
             </div>
           </div>
         </div>
